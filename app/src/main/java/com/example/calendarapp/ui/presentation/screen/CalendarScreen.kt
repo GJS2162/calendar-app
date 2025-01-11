@@ -3,14 +3,9 @@ package com.example.calendarapp.ui.presentation.screen
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -22,9 +17,9 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.calendarapp.ui.presentation.components.AnimatedCalendar
-import com.example.calendarapp.ui.presentation.components.CalendarGrid
-import com.example.calendarapp.ui.presentation.components.CalendarHeader
+import com.example.calendarapp.ui.viewmodels.EventViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -39,6 +34,8 @@ fun CalendarScreen() {
 
     val nextMonth = remember { mutableStateOf(LocalDate.now().plusMonths(1)) }
     val prevMonth = remember { mutableStateOf(LocalDate.now().minusMonths(1)) }
+
+    val eventViewModel: EventViewModel = hiltViewModel()
 
     Box(
         modifier = Modifier
@@ -80,6 +77,7 @@ fun CalendarScreen() {
 
         // Previous Month
         AnimatedCalendar(
+            eventViewModel = eventViewModel,
             monthOffset = swipeOffset.value - (1 + gapWidth),
             currentMonth = currentMonth.value.minusMonths(1),
             offsetPx = offsetPx
@@ -87,6 +85,7 @@ fun CalendarScreen() {
 
         // Current Month
         AnimatedCalendar(
+            eventViewModel = eventViewModel,
             monthOffset = swipeOffset.value,
             currentMonth = currentMonth.value,
             offsetPx = offsetPx,
@@ -101,6 +100,7 @@ fun CalendarScreen() {
 
         // Next Month
         AnimatedCalendar(
+            eventViewModel = eventViewModel,
             monthOffset = swipeOffset.value + (1 + gapWidth),
             currentMonth = currentMonth.value.plusMonths(1),
             offsetPx = offsetPx
