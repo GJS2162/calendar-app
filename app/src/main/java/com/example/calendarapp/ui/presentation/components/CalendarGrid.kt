@@ -17,8 +17,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import java.time.LocalDate
 
@@ -28,7 +28,8 @@ fun CalendarGrid(
     displayedMonth: LocalDate,
     daysInMonth: Int,
     firstDayOfWeek: Int,
-    onDayClick: (Int) -> Unit
+    onDayClick: (Int) -> Unit,
+    eventsByDate: Set<Int>
 ) {
 
     val currentDate = LocalDate.now()
@@ -45,7 +46,8 @@ fun CalendarGrid(
                 Text(
                     text = day,
                     modifier = Modifier.weight(1f),
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.SemiBold
                 )
             }
         }
@@ -60,7 +62,11 @@ fun CalendarGrid(
                             .weight(1f)
                             .aspectRatio(1f)
                             .padding(4.dp)
-                            .clickable { if (day != null) onDayClick(day) },
+                            .clickable {
+                                if (day != null){
+                                    onDayClick(day)
+                                }
+                                       },
                         contentAlignment = Alignment.Center
                     ) {
                         if( day != null){
@@ -82,22 +88,24 @@ fun CalendarGrid(
                             } else {
                                 Text(text = day.toString())
                             }
+
+                            // Display event indicator (small circle) below the date
+                            if (eventsByDate.contains(day)) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(6.dp)
+                                        .align(Alignment.BottomCenter)
+                                        .background(
+                                            color = Color.Red,
+                                            shape = CircleShape
+                                        )
+                                        .padding(top = 2.dp)
+                                )
+                            }
                         }
                     }
                 }
             }
         }
     }
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-@Preview
-@Composable
-fun CalendarGridPreview() {
-    CalendarGrid(
-        displayedMonth = LocalDate.of(2025, 1, 1),
-        daysInMonth = 31,
-        firstDayOfWeek = 1,
-        onDayClick = {}
-    )
 }

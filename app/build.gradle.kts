@@ -2,8 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id ("kotlin-kapt")
-    id ("dagger.hilt.android.plugin")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
+    kotlin("plugin.serialization") version "2.0.0"
 }
 
 android {
@@ -64,12 +65,14 @@ dependencies {
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
-    implementation (libs.androidx.room.ktx)
-    implementation (libs.androidx.hilt.navigation.compose)
-    implementation (libs.androidx.material.icons.extended)
-    implementation (libs.androidx.lifecycle.viewmodel.ktx.v260)
-    implementation (libs.androidx.lifecycle.runtime.ktx.v260)
-    implementation (libs.androidx.activity.ktx)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.activity.ktx)
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    implementation("androidx.compose.runtime:runtime:1.5.0")
+    implementation(libs.androidx.runtime.livedata)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 
 
 }

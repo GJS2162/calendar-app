@@ -22,6 +22,7 @@ object DatabaseModule {
     }
 
     @Provides
+    @Singleton
     fun provideEventDao(database: MyDatabase): EventDao {
         return database.eventDao()
     }

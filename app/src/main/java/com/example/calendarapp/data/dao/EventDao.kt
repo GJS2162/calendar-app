@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.example.calendarapp.data.model.Event
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface EventDao {
@@ -16,8 +17,12 @@ interface EventDao {
     suspend fun updateEvent(event: Event)
 
     @Query("SELECT * FROM events WHERE date = :date")
-    suspend fun getEventsByDate(date: String): List<Event>
+    fun getEventsByDate(date: String): Flow<List<Event>>
 
     @Delete
     suspend fun deleteEvent(event: Event)
+
+    @Query("SELECT DISTINCT date FROM events WHERE date LIKE :year || '-' || :month || '-%' ORDER BY date")
+    suspend fun getEventDatesForMonth(year: String, month: String): List<String>
+
 }

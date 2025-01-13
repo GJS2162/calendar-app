@@ -16,7 +16,15 @@ import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun AnimatedCalendar(eventViewModel: EventViewModel, monthOffset: Float, currentMonth: LocalDate, offsetPx: Float, onClickMonthChange: (Long) -> Unit = {}) {
+fun AnimatedCalendar(
+    eventViewModel: EventViewModel,
+    monthOffset: Float,
+    currentMonth: LocalDate,
+    offsetPx: Float,
+    onClickMonthChange: (Long) -> Unit = {},
+    onDayClick: (Int) -> Unit = {},
+    eventsByDate: Set<Int> = emptySet()
+) {
     val daysInMonth = currentMonth.lengthOfMonth()
     val firstDayOfWeek = currentMonth.withDayOfMonth(1).dayOfWeek.value % 7
 
@@ -37,11 +45,9 @@ fun AnimatedCalendar(eventViewModel: EventViewModel, monthOffset: Float, current
             daysInMonth = daysInMonth,
             firstDayOfWeek = firstDayOfWeek,
             onDayClick = { day ->
-//                AddEventScreen(
-//                    date = LocalDate.of(currentMonth.year, currentMonth.month, day).toString(),
-//                    eventViewModel = eventViewModel
-//                )
-            }
+                onDayClick(day)
+            },
+            eventsByDate = eventsByDate
         )
     }
 }
