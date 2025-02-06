@@ -29,6 +29,12 @@ class EventViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             _loading.value = true  // Start loading
             try {
+                launch{
+
+                }
+                launch{
+
+                }
                 repository.getEventsByDate(date).collect{
                     _events.value = it
                     _loading.value = false
@@ -38,7 +44,6 @@ class EventViewModel @Inject constructor(
                 _loading.value = false
             }
         }
-
     }
 
     suspend fun returnFetchEvents(date: String): List<Event> {
