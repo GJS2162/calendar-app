@@ -5,6 +5,8 @@ plugins {
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     kotlin("plugin.serialization") version "2.0.0"
+    id("com.android.application")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -73,6 +75,6 @@ dependencies {
     implementation("androidx.compose.runtime:runtime:1.5.0")
     implementation(libs.androidx.runtime.livedata)
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
-
-
+    implementation(platform("com.google.firebase:firebase-bom:33.8.0"))
+    implementation("com.google.firebase:firebase-analytics")
 }
